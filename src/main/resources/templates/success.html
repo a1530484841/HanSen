@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://wwww.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>thymeleaf模板</title>
+    <script src="js/jquery-1.8.3.min.js"></script>
+</head>
+
+<body>
+ <table border="1px" style="background-color: aqua;">
+     <tr>
+         <td>编号</td>
+         <td>姓名</td>
+         <td>性别</td>
+         <td>年龄</td>
+         <td>日期</td>
+         <td>电话</td>
+         <td>地址</td>
+
+         <td>操作</td>
+         <td>操作</td>
+     </tr>
+
+     <tr th:each="list:${list}">
+         <td th:text="${list.s_id}">编号</td>
+         <td th:text="${list.s_name}">姓名</td>
+         <td th:text="${list.s_sex}">性别</td>
+         <td th:text="${list.s_age}">年龄</td>
+         <td th:text="${list.s_date}">日期</td>
+         <td th:text="${list.s_phone}">电话</td>
+         <td th:text="${list.s_address}">地址</td>
+
+         <td class="dele">删除</td>
+         <td class="xiu">修改</td>
+     </tr>
+
+ </table>
+
+
+ <input type="hidden"     id="s_id">   <br/>
+ 姓名：<input type="text" id="s_name"> <br/>
+ 性别：<input type="text" id="s_sex"> <br/>
+ 年龄：<input type="text" id="s_age"> <br/>
+ 日期：<input type="text" id="s_date"> <br/>
+ 电话：<input type="text" id="s_phone"> <br/>
+ 地址：<input type="text" id="s_address"> <br/>
+ <input type="button" value="新增" id="add">    <input type="button" value="修改" id="update">
+</body>
+</html>
+<script>
+    //删除方法
+    $(".dele").click(function(){
+
+        var s_id=$(this).prev().prev().prev().prev().prev().prev().prev().text();
+     alert(s_id);
+        $.ajax({
+            url:"dele",
+            type:"post",
+            data:{"s_id":s_id},
+            success:function(data){
+                if(data==1){
+                    alert("删除成功！");
+                    window.location.href="findAll";
+                }else{
+                    alert("删除失败！")
+
+                }
+
+            }
+
+        })
+
+    })
+    //添加方法
+    $("#add").click(function(){
+
+        var s_name=$("#s_name").val();
+        var s_sex=$("#s_sex").val();
+        var s_age=$("#s_age").val();
+        var s_date=$("#s_date").val();
+        var s_phone=$("#s_phone").val();
+        var s_address=$("#s_address").val();
+  alert(s_name+s_sex+s_age+s_date+s_phone+s_address);
+        $.ajax({
+            url:"add",
+            type:"post",
+            data:{
+                "s_name":s_name,
+                "s_sex":s_sex,
+                "s_age":s_age,
+                "s_date":s_date,
+                "s_phone":s_phone,
+                "s_address":s_address
+            },
+            success:function(data){
+                if(data==1){
+                    alert("添加成功！");
+                    window.location.href="findAll";
+                }else{
+                    alert("添加失败！");
+
+                }
+
+            }
+
+        })
+
+    })
+//修改
+    $(".xiu").click(function(){
+        var  s_id=$(this).prev().prev().prev().prev().prev().prev().prev().prev().text();
+        var s_name=$(this).prev().prev().prev().prev().prev().prev().prev().text();
+        var s_sex=$(this).prev().prev().prev().prev().prev().prev().text();
+        var s_age=$(this).prev().prev().prev().prev().prev().text();
+        var s_date=$(this).prev().prev().prev().prev().text();
+        var s_phone=$(this).prev().prev().prev().text();
+        var s_address=$(this).prev().prev().text();
+
+        $("#s_id").val(s_id);
+        $("#s_name").val(s_name);
+        $("#s_sex").val(s_sex);
+        $("#s_age").val(s_age);
+        $("#s_date").val(s_date);
+        $("#s_phone").val(s_phone);
+        $("#s_address").val(s_address);
+    })
+
+    $("#update").click(function(){
+        var s_id=$("#s_id").val();
+        var s_name=$("#s_name").val();
+        var s_sex=$("#s_sex").val();
+        var s_age=$("#s_age").val();
+        var s_date=$("#s_date").val();
+        var s_phone=$("#s_phone").val();
+        var s_address=$("#s_address").val();
+
+        $.ajax({
+            url:"update",
+            type:"post",
+            data:{"s_id":s_id,
+                "s_name":s_name,
+                "s_sex":s_sex,
+                "s_age":s_age,
+                "s_date":s_date,
+                "s_phone":s_phone,
+                "s_address":s_address
+
+            },
+            success:function(data){
+                if(data==1){
+                    alert("修改成功！");
+                    window.location.href="findAll";
+                }else{
+                    alert("修改失败！");
+
+                }
+
+            }
+
+        })
+
+    })
+
+</script>

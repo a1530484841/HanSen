@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.springboot170104.mapper.StudentMapper">
+
+
+    <select id="findAll" resultType="com.aaa.springboot170104.entity.Student">
+        select * from student
+    </select>
+
+    <delete id="dele" parameterType="int">
+        delete from student where s_id=#{s_id}
+    </delete>
+
+    <insert id="add" parameterType="com.aaa.springboot170104.entity.Student">
+insert into student(s_name,s_sex,s_age,s_date,s_phone,s_address)values(#{s_name},#{s_sex},#{s_age},#{s_date},#{s_phone},#{s_address})
+    </insert>
+
+    <update id="update" parameterType="com.aaa.springboot170104.entity.Student">
+update student set s_name=#{s_name},s_sex=#{s_sex},s_age=#{s_age},s_date=#{s_date},s_phone=#{s_phone},s_address=#{s_address} where s_id=#{s_id}
+     </update>
+
+
+</mapper>
